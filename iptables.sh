@@ -1,3 +1,4 @@
+#iptables-persistent
 natServer=218.240.151.112
 insideDev=192.168.10.0/24
 #turn natServer into open ip_forward service
