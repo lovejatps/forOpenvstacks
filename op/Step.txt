@@ -1,0 +1,88 @@
+1、[所有节点]op-common-install.sh
+修改参数:
+CTL_MGR_IPADDR
+控制节点管理网络的IP
+192.168.100.x
+
+##(安装控制节点时，无需加参数)
+##(安装非控制节点时，需加参数n1.vdomain.com)
+
+##(如遇到未能链接到Source源情况——需修改/etc/apt/sources.list文件内容，添加ubt_sources_list_163.txt和ubt_sources_list_sohu.txt中的内容，再执行update命令)
+##（或直接将/etc/apt/的sources.list文件替换本目录下的sources.list文件，再执行update命令）
+
+2、[计算节点]op-compute-service-install.cpt.sh
+修改参数：
+CTL_HOST 
+控制节点名称 = n1.vdomain.com
+
+MANAGEMENT_INTERFACE_IP_ADDRESS
+本机的管理网段的IP地址
+##(eth1:1对应的IP地址192.168.100.X)
+
+3、[网络节点]op-network-service-install.net.sh
+修改参数:
+CTL_HOST 
+控制节点名称 = n1.vdomain.com
+
+INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS
+隧道IP地址 = 本机隧道IP地址
+
+4、[控制节点]op-identity-service-install.sh
+修改参数:
+CTL_HOST
+控制节点名称 = n1.vdomain.com
+
+5、[网络节点]op-network-service-install.net.3.sh
+修改参数:
+INTERFACE_NAME
+第三网卡-外部网络网卡
+p3p1
+
+6、[计算节点]op-network-service-install.cpt.sh
+修改参数:
+CTL_HOST 
+控制节点名称 = n1.vdomain.com
+
+INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS
+隧道IP地址 = 本机隧道IP地址
+
+7、[控制节点]op-image-service-install.sh
+修改参数:
+CTL_HOST 
+控制节点名称 = n1.vdomain.com
+
+8、[控制节点]op-compute-service-install.ctr.sh
+修改参数:
+CTL_HOST 
+控制节点名称 = n1.vdomain.com
+
+CTL_IPADDR
+控制节点管理网络的IP
+192.168.100.x
+
+9、[控制节点]op-network-service-install.ctr.sh
+修改参数:
+CTL_HOST 
+控制节点名称 = n1.vdomain.com
+
+10、[控制节点]op-network-service-install.net.2.sh
+
+11、[控制节点]op-network-service-install.init.sh
+修改参数:
+CTL_HOST=n1.vdomain.com
+
+FLOATING_IP_START=192.168.100.a#（外部网络的起始IP地址a）
+
+FLOATING_IP_END=192.168.100.b#（外部网络的结束IP地址b）
+
+EXTERNAL_NETWORK_GATEWAY=192.168.100.1#（外部网络的网关）
+
+EXTERNAL_NETWORK_CIDR=192.168.100.0/24#（外部网段/掩码）
+
+TENANT_NETWORK_GATEWAY=10.0.1.1#（隧道网络的网关）
+
+TENANT_NETWORK_CIDR=10.0.1.0/24#（隧道网段/掩码）
+
+12、[控制节点]op-dashboard-install.sh
+修改参数:
+CTL_HOST=n1.vdomain.com
