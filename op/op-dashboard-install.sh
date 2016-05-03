@@ -2,7 +2,7 @@
 
 CTL_HOST=controller
 
-apt-get install openstack-dashboard apache2 libapache2-mod-wsgi memcached python-memcache -y
+apt-get install openstack-dashboard apache2 libapache2-mod-wsgi memcached python-memcache
 
 echo "ServerName localhost:80" >> /etc/apache2/apache2.conf
 
