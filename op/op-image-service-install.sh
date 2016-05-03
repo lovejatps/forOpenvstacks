@@ -42,7 +42,7 @@ keystone endpoint-create \
   --adminurl http://${CTL_HOST}:9292 \
   --region regionOne
 
-apt-get install glance python-glanceclient -y
+apt-get install glance python-glanceclient
 
 sed -i "/#connection = <None>/cconnection = mysql://glance:${GLANCE_DBPASS}@${CTL_HOST}/glance" \
 /etc/glance/glance-api.conf
