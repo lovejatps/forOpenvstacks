@@ -44,7 +44,7 @@ keystone endpoint-create \
   --internalurl http://${CTL_HOST}:9696 \
   --region regionOne
 
-apt-get install neutron-server neutron-plugin-ml2 python-neutronclient -y
+apt-get install neutron-server neutron-plugin-ml2 python-neutronclient 
 
 sed -i "/^connection/cconnection = mysql://neutron:${NEUTRON_DBPASS}@${CTL_HOST}/neutron" /etc/neutron/neutron.conf
 sed -i "/^#rpc_backend=rabbit/s/#//" /etc/neutron/neutron.conf
