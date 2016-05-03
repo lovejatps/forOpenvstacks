@@ -8,7 +8,7 @@ RABBIT_PASS=123456
 
 
 if [ ! -f "/etc/ntp.conf" ]; then
-  apt-get install ntp -y
+  apt-get install ntp 
   cp /etc/ntp.conf /etc/ntp.conf.bak
 
   if [ $# -eq 0 ]; then
@@ -24,7 +24,7 @@ fi
 service ntp restart
 
 if [ ! -f "/etc/apt/sources.list.d/cloudarchive-juno.list" ]; then
-  apt-get install ubuntu-cloud-keyring -y
+  apt-get install ubuntu-cloud-keyring 
   echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu" \
   "trusty-updates/juno main" > /etc/apt/sources.list.d/cloudarchive-juno.list
   apt-get update && apt-get dist-upgrade
@@ -32,7 +32,7 @@ fi
 
 if [ $# -eq 0 ]; then
   if [ ! -f "/etc/mysql/my.cnf.bak" ]; then
-    apt-get install mariadb-server python-mysqldb -y
+    apt-get install mariadb-server python-mysqldb 
     #echo 'Please tell me your MariaDB password:'
     #read MARIADBPWD
     cp /etc/mysql/my.cnf /etc/mysql/my.cnf.bak
@@ -49,7 +49,7 @@ character-set-server = utf8" /etc/mysql/my.cnf
   fi
 fi
 
-apt-get install rabbitmq-server -y
+apt-get install rabbitmq-server 
 rabbitmqctl change_password guest ${RABBIT_PASS}
 
 #rb_version=`rabbitmqctl status | grep rabbit | head -2 | cut -d '"' -f 4 | grep '^[0-9]' | head -1`
