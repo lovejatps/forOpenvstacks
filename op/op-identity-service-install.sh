@@ -30,7 +30,7 @@ EOF
 
 RANDPWD=`openssl rand -hex 10`
 
-apt-get install keystone python-keystoneclient -y
+apt-get install keystone python-keystoneclient 
 
 cp /etc/keystone/keystone.conf /etc/keystone/keystone.conf.bak
 
