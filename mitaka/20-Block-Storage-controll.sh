@@ -34,7 +34,13 @@ if [ ! -f /etc/cinder/cinder.conf.bak ];then
 else
 	cp /etc/cinder/cinder.conf.bak /etc/cinder/cinder.conf
 fi
-sed -i "/^#connection =/cconnection = mysql+pymysql://cinder:${CINDER_DBPASS}@${controller}/cinder" /etc/cinder/cinder.conf
+echo "[database]"               >> /etc/cinder/cinder.conf
+echo "[oslo_messaging_rabbit]"  >> /etc/cinder/cinder.conf
+echo "[keystone_authtoken]"     >> /etc/cinder/cinder.conf
+echo "[lvm]"                    >> /etc/cinder/cinder.conf
+echo "[oslo_concurrency]"       >> /etc/cinder/cinder.conf
+
+sed -i "/\[database\]/,+0aconnection = mysql+pymysql://cinder:${CINDER_DBPASS}@${controller}/cinder" /etc/cinder/cinder.conf
 sed -i "/\[DEFAULT\]/,+0arpc_backend = rabbit" /etc/cinder/cinder.conf
 sed -i "/\[oslo_messaging_rabbit\]/,+0arabbit_password = ${RABBIT_PASS}" /etc/cinder/cinder.conf
 sed -i "/\[oslo_messaging_rabbit\]/,+0arabbit_userid = openstack" /etc/cinder/cinder.conf
@@ -54,8 +60,8 @@ sed -i "/\[oslo_concurrency\]/,+0alock_path = /var/lib/cinder/tmp" /etc/cinder/c
 su -s /bin/sh -c "cinder-manage db sync" cinder
 if [ `cat /etc/nova/nova.conf | grep cinder | wc -l` -eq 0 ];then
 	echo "[cinder]" >> /etc/nova/nova.conf
+	sed -i "/\[cinder\]/,+0aos_region_name = RegionOne" /etc/nova/nova.conf
 fi
-sed -i "/\[cinder\]/,+0aos_region_name = RegionOne" /etc/nova/nova.conf
 service nova-api restart
 service cinder-scheduler restart
 service cinder-api restart
