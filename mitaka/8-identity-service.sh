@@ -38,8 +38,6 @@ if [ ! -f ${ch_stat} ];then
 	su -s /bin/sh -c "keystone-manage db_sync" keystone
 	
 	keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
-	echo "Continue...?"
-	read tmp
 	
 	if [ `sudo cat /etc/apache2/apache2.conf | grep ServerName | wc -l` -eq 0 ];then
 		echo "ServerName ${CTL_HOST}" >> /etc/apache2/apache2.conf

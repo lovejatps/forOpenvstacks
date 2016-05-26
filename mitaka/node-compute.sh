@@ -10,8 +10,8 @@ neutrondbpwd=123456
 metadata_secret=123456
 novapwd=123456
 control=`cat control-node.sh | grep control= | cut -b 9-`
-localnode=mitaka-compute1.wodezoon.com
-dns_server=192.168.102.18
+localnode=mitaka-32.wodezoon.com
+dns_server=192.168.11.254
 ch_stat=/var/log/control_stat
 
 if [ ! -f ${ch_stat} ];then

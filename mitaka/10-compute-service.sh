@@ -33,8 +33,6 @@ if [ ! -f /var/log/nova_stat ];then
 	openstack endpoint create --region RegionOne compute internal http://${CTL_HOST}:8774/v2.1/%\(tenant_id\)s
 	openstack endpoint create --region RegionOne compute admin http://${CTL_HOST}:8774/v2.1/%\(tenant_id\)s
 
-	echo "Continue...?"
-	read tmp
 	apt-get install nova-api nova-conductor nova-consoleauth nova-novncproxy nova-scheduler
 
 	#from baidu:http://jingyan.baidu.com/article/359911f57ced1357fe030619.html

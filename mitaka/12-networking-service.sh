@@ -36,8 +36,6 @@ if [ ! -f ${ch_stat} ];then
 	openstack endpoint create --region RegionOne network public http://${CTL_HOST}:9696
 	openstack endpoint create --region RegionOne network internal http://${CTL_HOST}:9696
 	openstack endpoint create --region RegionOne network admin http://${CTL_HOST}:9696
-	echo "Continue...?"
-	read tmp
 fi
 ./14-networking-Self-service-networks.sh ${neutron} ${NEUTRON_DBPASS} ${RABBIT_PASS} ${NOVA_PASS} ${CTL_HOST} ${PROVIDER_INTERFACE_NAME} ${OVERLAY_INTERFACE_IP_ADDRESS}
 
