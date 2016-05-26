@@ -59,6 +59,6 @@ sed -i "/\[oslo_concurrency\]/,+0alock_path = /var/lib/nova/tmp" /etc/nova/nova.
 
 cp /etc/nova/nova.conf tmp/nova.conf
 if [ `egrep -c '(vmx|svm)' /proc/cpuinfo` -lt 1 ];then
-	sed -i "/^virt_type=/cvirt_type = qemu" /etc/nova/nova.conf
+	sed -i "/^virt_type=/cvirt_type = qemu" /etc/nova/nova-compute.conf
 fi
 service nova-compute restart
