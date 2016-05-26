@@ -133,7 +133,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'mitaka-controller.wodezoon.com:11211',
+        'LOCATION': 'mitaka-31.wodezoon.com:11211',
     },
 }
 
@@ -160,7 +160,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #    ('http://cluster2.example.com:5000/v2.0', 'cluster2'),
 #]
 
-OPENSTACK_HOST = "mitaka-controller.wodezoon.com"
+OPENSTACK_HOST = "mitaka-31.wodezoon.com"
 OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
 OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
 

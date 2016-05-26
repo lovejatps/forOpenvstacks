@@ -36,8 +36,13 @@ if [ ! -f /etc/manila/manila.conf.bak ];then
 else
 	cp /etc/manila/manila.conf.bak /etc/manila/manila.conf
 fi
+echo "[database]"               >> /etc/manila/manila.conf
+echo "[oslo_messaging_rabbit]"  >> /etc/manila/manila.conf
+echo "[keystone_authtoken]"     >> /etc/manila/manila.conf
+echo "[lvm]"                    >> /etc/manila/manila.conf
+echo "[oslo_concurrency]"       >> /etc/manila/manila.conf
 
-sed -i "/^#connection =/cconnection = mysql+pymysql://manila:${MANILA_DBPASS}@${controller}/manila" /etc/manila/manila.conf
+sed -i "/\[database\]/,+0aconnection = mysql+pymysql://cinder:${CINDER_DBPASS}@${controller}/cinder" /etc/manila/manila.conf
 sed -i "/\[DEFAULT\]/,+0arpc_backend = rabbit" /etc/manila/manila.conf
 sed -i "/\[oslo_messaging_rabbit\]/,+0arabbit_password = ${RABBIT_PASS}" /etc/manila/manila.conf
 sed -i "/\[oslo_messaging_rabbit\]/,+0arabbit_userid = openstack" /etc/manila/manila.conf

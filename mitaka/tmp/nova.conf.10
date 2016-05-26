@@ -1,0 +1,42 @@
+[DEFAULT]
+firewall_driver = nova.virt.firewall.NoopFirewallDriver
+use_neutron = True
+my_ip = 192.168.11.56
+auth_strategy = keystone
+rpc_backend = rabbit
+dhcpbridge_flagfile=/etc/nova/nova.conf
+dhcpbridge=/usr/bin/nova-dhcpbridge
+logdir=/var/log/nova
+state_path=/var/lib/nova
+lock_path=/var/lock/nova
+force_dhcp_release=True
+libvirt_use_virtio_for_bridges=True
+verbose=True
+ec2_private_dns_show_ip=True
+api_paste_config=/etc/nova/api-paste.ini
+enabled_apis = osapi_compute,metadata
+[api_database]
+connection = mysql+pymysql://nova:123456@mitaka-31.wodezoon.com/nova_api
+[database]
+connection = mysql+pymysql://nova:123456@mitaka-31.wodezoon.com/nova
+[oslo_messaging_rabbit]
+rabbit_password = 123456
+rabbit_userid = openstack
+rabbit_host = mitaka-31.wodezoon.com
+[keystone_authtoken]
+auth_uri = http://mitaka-31.wodezoon.com:5000
+auth_url = http://mitaka-31.wodezoon.com:35357
+memcached_servers = mitaka-31.wodezoon.com:11211
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+project_name = service
+username = nova
+password = 123456
+[vnc]
+vncserver_proxyclient_address = $my_ip
+vncserver_listen = $my_ip
+[glance]
+api_servers = http://mitaka-31.wodezoon.com:9292
+[oslo_concurrency]
+lock_path = /var/lib/nova/tmp
