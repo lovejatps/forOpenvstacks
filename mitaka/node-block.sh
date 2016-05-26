@@ -3,7 +3,7 @@ CINDER_DBPASS=123456
 CINDER_PASS=123456
 controller=`cat control-node.sh | grep control= | cut -b 9-`
 RABBIT_PASS=`cat control-node.sh | grep rabbit_passwd= | cut -b 15-`
-MANAGEMENT_INTERFACE_IP_ADDRESS=`ifconfig eth0 | grep "inet " | tr -sc '[0-9.]' ' '`
+MANAGEMENT_INTERFACE_IP_ADDRESS=(`ifconfig eth0 | grep "inet " | tr -sc '[0-9.]' ' '`)
 if [ ! -f /var/log/block_stat ];then
 	apt-get install lvm2
 	pvcreate /dev/sdb
@@ -15,16 +15,23 @@ if [ ! -f /etc/lvm/lvm.conf.bak ];then
 else
 	cp /etc/lvm/lvm.conf.bak /etc/lvm/lvm.conf
 fi
-sed -i "/devices {/,+0atobechange" /etc/lvm/lvm.conf
-sed -i "/tobechange/s/tobechange/    filter = [ \"a/sdb/\", \"r/.*/\"]/" /etc/lvm/lvm.conf
-sed -i "/devices {/,+0atobechange" /etc/lvm/lvm.conf
-sed -i "/tobechange/s/tobechange/    filter = [ \"a/sda/\", \"a/sdb/\", \"r/.*/\"]/" /etc/lvm/lvm.conf
+sed -i "/devices {/,+0atobechange    filter = [ \"a\/sdb/\", \"r\/.*/\"]" /etc/lvm/lvm.conf
+sed -i "/tobechange/s/tobechange//" /etc/lvm/lvm.conf
+sed -i "/devices {/,+0atobechange    filter = [ \"a\/sda/\", \"a\/sdb/\", \"r\/.*/\"]" /etc/lvm/lvm.conf
+sed -i "/tobechange/s/tobechange//" /etc/lvm/lvm.conf
 apt-get install cinder-volume
-if [ ! -f /etc/cinder/cinder.conf ];then
+if [ ! -f /etc/cinder/cinder.conf.bak ];then
 	cp /etc/cinder/cinder.conf /etc/cinder/cinder.conf.bak
 else
 	cp /etc/cinder/cinder.conf.bak /etc/cinder/cinder.conf
 fi
+
+echo "[database]"		>> /etc/cinder/cinder.conf
+echo "[oslo_messaging_rabbit]"	>> /etc/cinder/cinder.conf
+echo "[keystone_authtoken]"	>> /etc/cinder/cinder.conf
+echo "[lvm]"			>> /etc/cinder/cinder.conf
+echo "[oslo_concurrency]"	>> /etc/cinder/cinder.conf
+
 sed -i "/\[database\]/,+0aconnection = mysql+pymysql://cinder:${CINDER_DBPASS}@${controller}/cinder" /etc/cinder/cinder.conf
 sed -i "/\[DEFAULT\]/,+0arpc_backend = rabbit" /etc/cinder/cinder.conf
 sed -i "/\[oslo_messaging_rabbit\]/,+0arabbit_password = ${RABBIT_PASS}" /etc/cinder/cinder.conf
