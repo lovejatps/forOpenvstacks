@@ -3,8 +3,10 @@
 MARIADBPWD=$1
 #GLANCE_DBPASS=123456
 GLANCE_DBPASS=$2
+#GLANCE_PASS=123456
+GLANCE_PASS=$3
 #CTL_HOST=mitaka-1.wodezoon.com
-CTL_HOST=$3
+CTL_HOST=$4
 if [ ! -f /var/log/image_stat ];then
 	echo "have done before !" > /var/log/image_stat 
 	
@@ -31,7 +33,7 @@ else
         cp /etc/glance/glance-api.conf.bak /etc/glance/glance-api.conf
 fi
 sed -i "/^#connection =/cconnection = mysql+pymysql://glance:${GLANCE_DBPASS}@${CTL_HOST}/glance" /etc/glance/glance-api.conf
-sed -i "/\[keystone_authtoken\]/,+0apassword = ${GLANCE_DBPASS}" /etc/glance/glance-api.conf
+sed -i "/\[keystone_authtoken\]/,+0apassword = ${GLANCE_PASS}" /etc/glance/glance-api.conf
 sed -i "/\[keystone_authtoken\]/,+0ausername = glance" /etc/glance/glance-api.conf
 sed -i "/\[keystone_authtoken\]/,+0aproject_name = service" /etc/glance/glance-api.conf
 sed -i "/\[keystone_authtoken\]/,+0auser_domain_name = default" /etc/glance/glance-api.conf
@@ -60,7 +62,7 @@ sed -i "/\[keystone_authtoken\]/,+0aproject_domain_name = default" /etc/glance/g
 sed -i "/\[keystone_authtoken\]/,+0auser_domain_name = default" /etc/glance/glance-registry.conf
 sed -i "/\[keystone_authtoken\]/,+0aproject_name = service" /etc/glance/glance-registry.conf
 sed -i "/\[keystone_authtoken\]/,+0ausername = glance" /etc/glance/glance-registry.conf
-sed -i "/\[keystone_authtoken\]/,+0apassword = ${GLANCE_DBPASS}" /etc/glance/glance-registry.conf
+sed -i "/\[keystone_authtoken\]/,+0apassword = ${GLANCE_PASS}" /etc/glance/glance-registry.conf
 sed -i "/\[paste_deploy\]/,+0aflavor = keystone" /etc/glance/glance-registry.conf
 cp /etc/glance/glance-registry.conf tmp/glance-registry.conf	
 su -s /bin/sh -c "glance-manage db_sync" glance

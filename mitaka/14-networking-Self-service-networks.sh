@@ -3,16 +3,18 @@
 neutron=$1
 #NEUTRON_DBPASS=123456
 NEUTRON_DBPASS=$2
+#NEUTRON_PASS=123456
+NEUTRON_PASS=$3
 #RABBIT_PASS=123456
-RABBIT_PASS=$3
+RABBIT_PASS=$4
 #NOVA_PASS=123456
-NOVA_PASS=$4
+NOVA_PASS=$5
 #CTL_HOST=mitaka-1.wodezoon.com
-CTL_HOST=$5
+CTL_HOST=$6
 #PROVIDER_INTERFACE_NAME=eth1
-PROVIDER_INTERFACE_NAME=$6
+PROVIDER_INTERFACE_NAME=$7
 #OVERLAY_INTERFACE_IP_ADDRESS=192.168.102.123
-OVERLAY_INTERFACE_IP_ADDRESS=$7
+OVERLAY_INTERFACE_IP_ADDRESS=$8
 ch_stat=/var/log/neutron_stat
 if [ ! -f ${ch_stat} ];then
 	echo "have done before" > ${ch_stat}
@@ -49,7 +51,7 @@ sed -i "/memcached_servers = ${CTL_HOST}:11211/,+0aproject_name = service" /etc/
 sed -i "/memcached_servers = ${CTL_HOST}:11211/,+0auser_domain_name = default" /etc/neutron/neutron.conf
 sed -i "/memcached_servers = ${CTL_HOST}:11211/,+0aproject_domain_name = default" /etc/neutron/neutron.conf
 sed -i "/memcached_servers = ${CTL_HOST}:11211/,+0aauth_type = password" /etc/neutron/neutron.conf
-sed -i "/username = neutron/,+0apassword = ${NEUTRON_DBPASS}" /etc/neutron/neutron.conf
+sed -i "/username = neutron/,+0apassword = ${NEUTRON_PASS}" /etc/neutron/neutron.conf
 
 sed -i "/^#notify_nova_on_port_status_changes =/cnotify_nova_on_port_status_changes = True" /etc/neutron/neutron.conf
 sed -i "/^#notify_nova_on_port_data_changes =/cnotify_nova_on_port_data_changes = True" /etc/neutron/neutron.conf

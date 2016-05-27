@@ -63,7 +63,7 @@ sed -i "/\[oslo_messaging_rabbit\]/,+0arabbit_password = ${RABBIT_PASS}" /etc/no
 
 sed -i "/\[DEFAULT\]/,+0aauth_strategy = keystone" /etc/nova/nova.conf
 
-sed -i "/\[keystone_authtoken\]/,+0apassword = ${NOVA_DBPASS}" /etc/nova/nova.conf
+sed -i "/\[keystone_authtoken\]/,+0apassword = ${NOVA_PASS}" /etc/nova/nova.conf
 sed -i "/\[keystone_authtoken\]/,+0ausername = nova" /etc/nova/nova.conf
 sed -i "/\[keystone_authtoken\]/,+0aproject_name = service" /etc/nova/nova.conf
 sed -i "/\[keystone_authtoken\]/,+0auser_domain_name = default" /etc/nova/nova.conf

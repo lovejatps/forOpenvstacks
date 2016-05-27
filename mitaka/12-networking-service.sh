@@ -5,18 +5,20 @@ neutron=$1
 MARIADBPWD=$2
 #NEUTRON_DBPASS=123456
 NEUTRON_DBPASS=$3
+#NEUTRON_PASS=123456
+NEUTRON_PASS=$4
 #METADATA_SECRET=123456
-METADATA_SECRET=$4
+METADATA_SECRET=$5
 #RABBIT_PASS=123456
-RABBIT_PASS=$5
+RABBIT_PASS=$6
 #NOVA_PASS=123456
-NOVA_PASS=$6
+NOVA_PASS=$7
 #CTL_HOST=mitaka-1.wodezoon.com
-CTL_HOST=$7
+CTL_HOST=$8
 #PROVIDER_INTERFACE_NAME=eth1
-PROVIDER_INTERFACE_NAME=$8
+PROVIDER_INTERFACE_NAME=$9
 #OVERLAY_INTERFACE_IP_ADDRESS=192.168.102.123
-OVERLAY_INTERFACE_IP_ADDRESS=$9
+OVERLAY_INTERFACE_IP_ADDRESS=$10
 ch_stat=/var/log/neutron_base_stat
 if [ ! -f ${ch_stat} ];then
 	echo "have done before" > ${ch_stat}
@@ -37,7 +39,7 @@ if [ ! -f ${ch_stat} ];then
 	openstack endpoint create --region RegionOne network internal http://${CTL_HOST}:9696
 	openstack endpoint create --region RegionOne network admin http://${CTL_HOST}:9696
 fi
-./14-networking-Self-service-networks.sh ${neutron} ${NEUTRON_DBPASS} ${RABBIT_PASS} ${NOVA_PASS} ${CTL_HOST} ${PROVIDER_INTERFACE_NAME} ${OVERLAY_INTERFACE_IP_ADDRESS}
+./14-networking-Self-service-networks.sh ${neutron} ${NEUTRON_DBPASS} ${NEUTRON_PASS} ${RABBIT_PASS} ${NOVA_PASS} ${CTL_HOST} ${PROVIDER_INTERFACE_NAME} ${OVERLAY_INTERFACE_IP_ADDRESS}
 
 if [ ! -f /etc/neutron/metadata_agent.ini.bak ];then
 	cp /etc/neutron/metadata_agent.ini /etc/neutron/metadata_agent.ini.bak
@@ -50,7 +52,7 @@ sed -i "/^#metadata_proxy_shared_secret =/cmetadata_proxy_shared_secret = ${META
 echo "[neutron]" >> /etc/nova/nova.conf
 sed -i "/\[neutron\]/,+0ametadata_proxy_shared_secret = ${METADATA_SECRET}" /etc/nova/nova.conf
 sed -i "/\[neutron\]/,+0aservice_metadata_proxy = True" /etc/nova/nova.conf
-sed -i "/\[neutron\]/,+0apassword = ${NEUTRON_DBPASS}" /etc/nova/nova.conf
+sed -i "/\[neutron\]/,+0apassword = ${NEUTRON_PASS}" /etc/nova/nova.conf
 sed -i "/\[neutron\]/,+0ausername = neutron" /etc/nova/nova.conf
 sed -i "/\[neutron\]/,+0aproject_name = service" /etc/nova/nova.conf
 sed -i "/\[neutron\]/,+0aregion_name = RegionOne" /etc/nova/nova.conf

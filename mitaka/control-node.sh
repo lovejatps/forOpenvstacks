@@ -3,12 +3,14 @@ eth01=eth0
 eth02=eth1
 rabbit_passwd=123456
 mariadbpwd=123456
-novadbpwd=123456
 keystonepwd=123456
-glancepwd=123456
+glancedbpwd=123456
+glancepwd=glance123!@#
+novadbpwd=123456
+novapwd=nova123!@#
 neutrondbpwd=123456
+neutronpwd=neutron123!@#
 metadata_secret=123456
-novapwd=123456
 CINDER_DBPASS=123456
 MANILA_DBPASS=123456
 MANILA_PASS=123456
@@ -50,11 +52,11 @@ echo "############Start memcached-Setup!"
 echo "############Start identity-service-Setup!"
 ./8-identity-service.sh ${mariadbpwd} ${keystonepwd} ${control}
 echo "############Start image-service-Setup!"
-./9-image-service.sh ${mariadbpwd} ${glancepwd} ${control}
+./9-image-service.sh ${mariadbpwd} ${glancedbpwd} ${glancepwd} ${control}
 echo "############Start compute-service-Setup!"
 ./10-compute-service.sh ${mariadbpwd} ${novadbpwd} ${rabbit_passwd} ${novapwd} ${ipaddr} ${control}
 echo "############Start networking-service.sh-Setup!"
-./12-networking-service.sh ${control} ${mariadbpwd} ${neutrondbpwd} ${metadata_secret} ${rabbit_passwd} ${novapwd} ${control} ${eth02} ${ipaddr}
+./12-networking-service.sh ${control} ${mariadbpwd} ${neutrondbpwd} ${neutronpwd} ${metadata_secret} ${rabbit_passwd} ${novapwd} ${control} ${eth02} ${ipaddr}
 echo "############Start dashboard Setup!"
 ./18-myop-dashborad.sh ${control}
 echo "############Start Create LAN and sublan 192.168.168.0/24 Setup!"
