@@ -56,6 +56,7 @@ echo "############Start image-service-Setup!"
 echo "############Start compute-service-Setup!"
 ./10-compute-service.sh ${mariadbpwd} ${novadbpwd} ${rabbit_passwd} ${novapwd} ${ipaddr} ${control}
 echo "############Start networking-service.sh-Setup!"
+echo "./12-networking-service.sh ${control} ${mariadbpwd} ${neutrondbpwd} ${neutronpwd} ${metadata_secret} ${rabbit_passwd} ${novapwd} ${control} ${eth02} ${ipaddr}"
 ./12-networking-service.sh ${control} ${mariadbpwd} ${neutrondbpwd} ${neutronpwd} ${metadata_secret} ${rabbit_passwd} ${novapwd} ${control} ${eth02} ${ipaddr}
 echo "############Start dashboard Setup!"
 ./18-myop-dashborad.sh ${control}

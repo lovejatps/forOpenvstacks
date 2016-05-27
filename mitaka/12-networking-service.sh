@@ -18,7 +18,7 @@ CTL_HOST=$8
 #PROVIDER_INTERFACE_NAME=eth1
 PROVIDER_INTERFACE_NAME=$9
 #OVERLAY_INTERFACE_IP_ADDRESS=192.168.102.123
-OVERLAY_INTERFACE_IP_ADDRESS=$10
+OVERLAY_INTERFACE_IP_ADDRESS=${10}
 ch_stat=/var/log/neutron_base_stat
 if [ ! -f ${ch_stat} ];then
 	echo "have done before" > ${ch_stat}
@@ -39,6 +39,7 @@ if [ ! -f ${ch_stat} ];then
 	openstack endpoint create --region RegionOne network internal http://${CTL_HOST}:9696
 	openstack endpoint create --region RegionOne network admin http://${CTL_HOST}:9696
 fi
+echo "./14-networking-Self-service-networks.sh ${neutron} ${NEUTRON_DBPASS} ${NEUTRON_PASS} ${RABBIT_PASS} ${NOVA_PASS} ${CTL_HOST} ${PROVIDER_INTERFACE_NAME} ${OVERLAY_INTERFACE_IP_ADDRESS}"
 ./14-networking-Self-service-networks.sh ${neutron} ${NEUTRON_DBPASS} ${NEUTRON_PASS} ${RABBIT_PASS} ${NOVA_PASS} ${CTL_HOST} ${PROVIDER_INTERFACE_NAME} ${OVERLAY_INTERFACE_IP_ADDRESS}
 
 if [ ! -f /etc/neutron/metadata_agent.ini.bak ];then
