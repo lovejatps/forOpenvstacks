@@ -1,9 +1,9 @@
 #!/bin/bash
-CINDER_DBPASS=123456
-CINDER_PASS=123456
-controller=`cat control-node.sh | grep control= | cut -b 9-`
-RABBIT_PASS=`cat control-node.sh | grep rabbit_passwd= | cut -b 15-`
-MANAGEMENT_INTERFACE_IP_ADDRESS=(`ifconfig eth0 | grep "inet " | tr -sc '[0-9.]' ' '`)
+CINDER_DBPASS=$1
+CINDER_PASS=$2
+controller=$3
+RABBIT_PASS=$4
+MANAGEMENT_INTERFACE_IP_ADDRESS=$5
 if [ ! -f /var/log/block_stat ];then
 	apt-get install lvm2
 	pvcreate /dev/sdb
@@ -15,10 +15,13 @@ if [ ! -f /etc/lvm/lvm.conf.bak ];then
 else
 	cp /etc/lvm/lvm.conf.bak /etc/lvm/lvm.conf
 fi
-sed -i "/devices {/,+0atobechange    filter = [ \"a\/sdb/\", \"r\/.*/\"]" /etc/lvm/lvm.conf
-sed -i "/tobechange/s/tobechange//" /etc/lvm/lvm.conf
-sed -i "/devices {/,+0atobechange    filter = [ \"a\/sda/\", \"a\/sdb/\", \"r\/.*/\"]" /etc/lvm/lvm.conf
-sed -i "/tobechange/s/tobechange//" /etc/lvm/lvm.conf
+if [ `ls /dev | grep sdb | wc -l` -eq 0 ];then
+	sed -i "/    filter =/c#    filter = [ \"a\/sda/\", \"r\/.*/\"]" /etc/lvm/lvm.conf
+	sed -i "/#    /s/#//" /etc/lvm/lvm.conf
+else
+	sed -i "/    filter =/c#    filter = [ \"a\/sda/\",\"a\/sdb/\", \"r\/.*/\"]" /etc/lvm/lvm.conf
+	sed -i "/#    /s/#//" /etc/lvm/lvm.conf
+fi
 apt-get install cinder-volume
 if [ ! -f /etc/cinder/cinder.conf.bak ];then
 	cp /etc/cinder/cinder.conf /etc/cinder/cinder.conf.bak
