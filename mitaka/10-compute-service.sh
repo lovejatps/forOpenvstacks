@@ -87,8 +87,6 @@ sed -i "/\[oslo_concurrency\]/,+0alock_path = /var/lib/nova/tmp" /etc/nova/nova.
 cp /etc/nova/nova.conf tmp/nova.conf.10
 su -s /bin/sh -c "nova-manage api_db sync" nova
 su -s /bin/sh -c "nova-manage db sync" nova
-echo "Continue...?"
-read tmp
 service nova-api restart
 service nova-consoleauth restart
 service nova-scheduler restart
